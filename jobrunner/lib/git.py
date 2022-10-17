@@ -142,7 +142,7 @@ def get_sha_from_remote_ref(repo_url, ref):
                 "git",
                 "ls-remote",
                 "--quiet",
-                add_access_token_and_proxy(repo_url),
+                repo_url,
                 ref,
                 deref_ref,
             ],
@@ -263,7 +263,7 @@ def fetch_commit(repo_dir, repo_url, commit_sha, depth=1):
     max_retries = 5
     sleep = 4
     attempt = 1
-    authenticated_url = add_access_token_and_proxy(repo_url)
+    authenticated_url = repo_url
     while True:
         try:
             subprocess_run(

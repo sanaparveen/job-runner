@@ -49,6 +49,7 @@ def sync():
         return
 
     job_request_ids = [i.id for i in job_requests]
+    print(job_requests)
     for job_request in job_requests:
         with set_log_context(job_request=job_request):
             create_or_update_jobs(job_request)

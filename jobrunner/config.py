@@ -25,16 +25,16 @@ ARCHIVE_FORMATS = (".tar.gz", ".tar.zstd", ".tar.xz")
 
 
 JOB_SERVER_ENDPOINT = os.environ.get(
-    "JOB_SERVER_ENDPOINT", "https://jobs.opensafely.org/api/v2/"
+    "JOB_SERVER_ENDPOINT", "http://0.0.0.0:8000/api/v2/"
 )
-JOB_SERVER_TOKEN = os.environ.get("JOB_SERVER_TOKEN", "token")
+JOB_SERVER_TOKEN = os.environ.get("JOB_SERVER_TOKEN", "9a672848b1503b22270a05784fc01f6703885f3e")
 
 PRIVATE_REPO_ACCESS_TOKEN = os.environ.get("PRIVATE_REPO_ACCESS_TOKEN", "")
 
 POLL_INTERVAL = float(os.environ.get("POLL_INTERVAL", "5"))
 JOB_LOOP_INTERVAL = float(os.environ.get("JOB_LOOP_INTERVAL", "1.0"))
 
-BACKEND = os.environ.get("BACKEND", "expectations")
+BACKEND = os.environ.get("BACKEND", "full")
 if not _is_valid_backend_name(BACKEND):
     raise RuntimeError(f"BACKEND not in valid format: '{BACKEND}'")
 
@@ -43,7 +43,7 @@ truthy = ("true", "1", "yes")
 if os.environ.get("USING_DUMMY_DATA_BACKEND", "false").lower().strip() in truthy:
     USING_DUMMY_DATA_BACKEND = True
 else:
-    USING_DUMMY_DATA_BACKEND = BACKEND == "expectations"
+    USING_DUMMY_DATA_BACKEND = BACKEND == "TestBackend"
 
 ALLOWED_IMAGES = {
     "cohortextractor",
@@ -58,9 +58,9 @@ ALLOWED_IMAGES = {
 DOCKER_REGISTRY = os.environ.get("DOCKER_REGISTRY", "ghcr.io/opensafely-core")
 
 DATABASE_URLS = {
-    "full": os.environ.get("FULL_DATABASE_URL"),
+    "full": "postgres://jobsuser:pass@db:5432/jobserver",#os.environ.get("FULL_DATABASE_URL"),
     "slice": os.environ.get("SLICE_DATABASE_URL"),
-    "dummy": os.environ.get("DUMMY_DATABASE_URL"),
+    "dummy": "postgres://jobsuser:pass@db:5432/jobserver",#os.environ.get("DUMMY_DATABASE_URL"),
 }
 
 TEMP_DATABASE_NAME = os.environ.get("TEMP_DATABASE_NAME")
@@ -110,11 +110,11 @@ STATA_LICENSE_REPO = os.environ.get(
 )
 
 
-ACTIONS_GITHUB_ORG = "opensafely-actions"
+ACTIONS_GITHUB_ORG = "SanaTestOrg"
 ACTIONS_GITHUB_ORG_URL = f"https://github.com/{ACTIONS_GITHUB_ORG}"
 
 ALLOWED_GITHUB_ORGS = (
-    os.environ.get("ALLOWED_GITHUB_ORGS", "opensafely").strip().split(",")
+    os.environ.get("ALLOWED_GITHUB_ORGS", "SanaTestOrg").strip().split(",")
 )
 
 # We hardcode this for now, as from a security perspective, we do not want it
